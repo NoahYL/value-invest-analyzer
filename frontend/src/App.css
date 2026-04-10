@@ -1,0 +1,401 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background: #f0f2f5;
+  color: #333;
+}
+
+.app {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+.title {
+  text-align: center;
+  font-size: 28px;
+  font-weight: 700;
+  color: #1a1a2e;
+}
+
+.subtitle {
+  text-align: center;
+  color: #666;
+  margin-top: 8px;
+  font-size: 14px;
+}
+
+.search-bar {
+  display: flex;
+  gap: 8px;
+  margin-top: 32px;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.search-input {
+  flex: 1;
+  padding: 12px 16px;
+  font-size: 15px;
+  border: 2px solid #d9d9d9;
+  border-radius: 8px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.search-input:focus {
+  border-color: #1677ff;
+}
+
+.search-btn {
+  padding: 12px 24px;
+  font-size: 15px;
+  background: #1677ff;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.2s;
+}
+
+.search-btn:hover {
+  background: #0958d9;
+}
+
+.search-btn:disabled {
+  background: #91caff;
+  cursor: not-allowed;
+}
+
+.error-msg {
+  margin-top: 20px;
+  padding: 12px 16px;
+  background: #fff2f0;
+  border: 1px solid #ffccc7;
+  border-radius: 8px;
+  color: #cf1322;
+  font-size: 14px;
+}
+
+.result-area {
+  margin-top: 24px;
+}
+
+/* ===== 两栏布局 ===== */
+.stock-header-card {
+  margin-bottom: 16px;
+}
+
+.full-width-card {
+  margin-top: 16px;
+}
+
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  align-items: start;
+}
+
+.col-right {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+@media (max-width: 860px) {
+  .two-col {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ===== 股票卡片 ===== */
+.stock-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.stock-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.stock-name {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.stock-code {
+  font-size: 14px;
+  color: #888;
+  font-family: monospace;
+}
+
+.stock-market {
+  font-size: 12px;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-weight: 500;
+}
+
+.stock-market.a-share {
+  background: #fff1f0;
+  color: #cf1322;
+}
+
+.stock-market.us-stock {
+  background: #f0f5ff;
+  color: #1677ff;
+}
+
+.stock-details {
+  margin-top: 16px;
+}
+
+.detail-row {
+  display: flex;
+  padding: 10px 0;
+  border-bottom: 1px solid #fafafa;
+}
+
+.detail-row:last-child {
+  border-bottom: none;
+}
+
+.label {
+  width: 80px;
+  flex-shrink: 0;
+  color: #888;
+  font-size: 14px;
+}
+
+.value {
+  flex: 1;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.value.business {
+  color: #555;
+}
+
+/* ===== 概念板块 ===== */
+.section {
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid #f0f0f0;
+}
+
+.section-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: #1a1a2e;
+  margin-bottom: 12px;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tag {
+  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: 4px;
+  background: #f6f6f6;
+  color: #555;
+  border: 1px solid #eee;
+}
+
+/* ===== 财务数据面板 ===== */
+.report-tag {
+  font-size: 11px;
+  font-weight: 400;
+  color: #888;
+  background: #f5f5f5;
+  padding: 2px 8px;
+  border-radius: 4px;
+  margin-left: 8px;
+  vertical-align: middle;
+}
+
+.fin-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.fin-card {
+  background: #fafbfc;
+  border: 1px solid #f0f0f0;
+  border-radius: 8px;
+  padding: 14px 16px;
+  text-align: center;
+}
+
+.fin-label {
+  font-size: 12px;
+  color: #888;
+  margin-bottom: 6px;
+}
+
+.fin-value {
+  font-size: 18px;
+  font-weight: 600;
+  font-family: -apple-system, monospace;
+  color: #333;
+}
+
+.fin-value.green {
+  color: #389e0d;
+}
+
+.fin-value.red {
+  color: #cf1322;
+}
+
+@media (max-width: 520px) {
+  .fin-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* ===== 最赚钱业务高亮 ===== */
+.highlight-box {
+  background: #fffbe6;
+  border: 1px solid #ffe58f;
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 13px;
+  color: #614700;
+  margin-bottom: 14px;
+  line-height: 1.6;
+}
+
+.highlight-icon {
+  color: #faad14;
+  margin-right: 4px;
+}
+
+/* ===== 收入构成表格 ===== */
+.revenue-table {
+  font-size: 13px;
+}
+
+.rev-header {
+  display: flex;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 2px solid #f0f0f0;
+  color: #888;
+  font-weight: 500;
+}
+
+.rev-row {
+  display: flex;
+  align-items: center;
+  padding: 9px 0;
+  border-bottom: 1px solid #fafafa;
+}
+
+.rev-row:last-child {
+  border-bottom: none;
+}
+
+.rev-cell {
+  flex-shrink: 0;
+}
+
+.rev-cell.name {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding-right: 8px;
+}
+
+.rev-cell.num {
+  width: 72px;
+  text-align: right;
+  padding-right: 12px;
+  font-family: monospace;
+}
+
+.rev-cell.bar-col {
+  width: 120px;
+  display: flex;
+  align-items: center;
+}
+
+.bar {
+  display: block;
+  height: 12px;
+  border-radius: 2px;
+  background: #1677ff33;
+  min-width: 2px;
+  transition: width 0.3s;
+}
+
+.high-margin {
+  color: #389e0d;
+  font-weight: 600;
+}
+
+.mid-margin {
+  color: #d48806;
+}
+
+.low-margin {
+  color: #999;
+}
+
+/* ===== 搜索列表 ===== */
+.stock-list {
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px 24px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.list-hint {
+  font-size: 13px;
+  color: #888;
+  margin-bottom: 12px;
+}
+
+.stock-list-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.stock-list-item:hover {
+  background: #f5f5f5;
+}
+
+.item-code {
+  font-family: monospace;
+  font-size: 14px;
+  color: #1677ff;
+  width: 70px;
+}
+
+.item-name {
+  font-size: 14px;
+}

@@ -1,0 +1,336 @@
+.val-panel {
+  margin-top: 0;
+}
+
+/* 问号提示 */
+.val-tip-wrap {
+  position: relative;
+  display: inline-block;
+  margin-left: 4px;
+  vertical-align: middle;
+}
+
+.val-tip-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: #e8e8e8;
+  color: #888;
+  font-size: 10px;
+  font-weight: 600;
+  cursor: help;
+  line-height: 1;
+}
+
+.val-tip-bubble {
+  display: none;
+  position: absolute;
+  left: -8px;
+  top: calc(100% + 8px);
+  width: 240px;
+  padding: 10px 12px;
+  background: #1a1a2e;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.6;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  z-index: 100;
+  pointer-events: none;
+}
+
+.val-tip-bubble::after {
+  content: "";
+  position: absolute;
+  bottom: 100%;
+  left: 16px;
+  border: 6px solid transparent;
+  border-bottom-color: #1a1a2e;
+}
+
+.val-tip-wrap:hover .val-tip-bubble {
+  display: block;
+}
+
+.val-loading {
+  padding: 20px;
+  color: #888;
+  font-size: 13px;
+  text-align: center;
+}
+
+/* 评分条 */
+.val-score-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.val-score-label {
+  font-size: 13px;
+  color: #888;
+  white-space: nowrap;
+}
+
+.val-score-track {
+  flex: 1;
+  height: 8px;
+  background: #f0f0f0;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.val-score-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.6s ease;
+}
+
+.val-score-num {
+  font-size: 20px;
+  font-weight: 700;
+  font-family: -apple-system, monospace;
+}
+
+.val-score-num.green { color: #389e0d; }
+.val-score-num.orange { color: #d48806; }
+.val-score-num.red { color: #cf1322; }
+
+.val-signal {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 2px 6px;
+  border-radius: 3px;
+  white-space: nowrap;
+}
+
+.val-signal.green { background: #f6ffed; color: #389e0d; }
+.val-signal.orange { background: #fffbe6; color: #d48806; }
+.val-signal.red { background: #fff1f0; color: #cf1322; }
+
+/* 各模块 */
+.val-section {
+  padding-top: 14px;
+  margin-top: 14px;
+  border-top: 1px solid #f0f0f0;
+}
+
+.val-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: #1a1a2e;
+  margin-bottom: 10px;
+}
+
+/* 目标价 */
+.val-target-main {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.val-target-label {
+  font-size: 12px;
+  color: #888;
+}
+
+.val-target-price {
+  font-size: 22px;
+  font-weight: 700;
+  color: #1a1a2e;
+  font-family: -apple-system, monospace;
+}
+
+.val-upside {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.val-upside.green { color: #389e0d; }
+.val-upside.red { color: #cf1322; }
+
+/* 价格范围条 */
+.val-target-range {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.val-range-label {
+  font-size: 11px;
+  color: #999;
+  font-family: monospace;
+  white-space: nowrap;
+}
+
+.val-range-bar {
+  flex: 1;
+  height: 6px;
+  background: linear-gradient(90deg, #cf1322 0%, #d48806 40%, #389e0d 100%);
+  border-radius: 3px;
+  position: relative;
+}
+
+.val-range-marker {
+  position: absolute;
+  top: -5px;
+  width: 3px;
+  height: 16px;
+  background: #1a1a2e;
+  border-radius: 1px;
+  transform: translateX(-50%);
+}
+
+/* 评级分布 */
+.val-ratings {
+  margin-bottom: 10px;
+}
+
+.val-analyst-count {
+  font-size: 11px;
+  color: #999;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.val-rating-bars {
+  display: flex;
+  border-radius: 4px;
+  overflow: hidden;
+  height: 22px;
+  font-size: 11px;
+  font-weight: 500;
+  color: #fff;
+}
+
+.val-rating-seg {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  min-width: 0;
+  padding: 0 4px;
+}
+
+.val-rating-seg.buy { background: #389e0d; }
+.val-rating-seg.hold { background: #d48806; }
+.val-rating-seg.sell { background: #cf1322; }
+
+/* EPS 预测 */
+.val-forecasts {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.val-fc-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #fafbfc;
+  border: 1px solid #f0f0f0;
+  border-radius: 6px;
+  padding: 6px 10px;
+  flex: 1;
+  min-width: 60px;
+}
+
+.val-fc-year {
+  font-size: 11px;
+  color: #888;
+}
+
+.val-fc-eps {
+  font-size: 12px;
+  font-weight: 600;
+  color: #333;
+  font-family: monospace;
+}
+
+/* PEG 指标 */
+.val-metrics {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.val-metric {
+  flex: 1;
+  text-align: center;
+  background: #fafbfc;
+  border: 1px solid #f0f0f0;
+  border-radius: 6px;
+  padding: 8px 6px;
+}
+
+.val-metric-label {
+  display: block;
+  font-size: 11px;
+  color: #888;
+  margin-bottom: 2px;
+}
+
+.val-metric-value {
+  font-size: 16px;
+  font-weight: 600;
+  font-family: -apple-system, monospace;
+  color: #333;
+}
+
+.val-metric-value.green { color: #389e0d; }
+.val-metric-value.orange { color: #d48806; }
+.val-metric-value.red { color: #cf1322; }
+
+/* 信号标签 */
+.val-signal-tag {
+  font-size: 12px;
+  padding: 6px 10px;
+  border-radius: 6px;
+  margin-top: 8px;
+}
+
+.val-signal-tag.green { background: #f6ffed; color: #389e0d; }
+.val-signal-tag.orange { background: #fffbe6; color: #d48806; }
+.val-signal-tag.red { background: #fff1f0; color: #cf1322; }
+
+/* 格雷厄姆 */
+.val-graham {
+  font-size: 13px;
+}
+
+.val-graham-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 0;
+  border-bottom: 1px solid #fafafa;
+}
+
+.val-graham-row:last-child {
+  border-bottom: none;
+}
+
+.val-graham-row span:first-child {
+  color: #888;
+}
+
+.val-graham-price {
+  font-weight: 700;
+  color: #1677ff;
+}
+
+.val-graham-note {
+  font-size: 11px;
+  color: #bbb;
+  margin-top: 6px;
+}
+
+.green { color: #389e0d; }
+.red { color: #cf1322; }
+.orange { color: #d48806; }
