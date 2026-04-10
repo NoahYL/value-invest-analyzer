@@ -94,7 +94,14 @@ def search_us_stock(symbol: str) -> dict | None:
             financials["revenue"] = info.get("totalRevenue")
             financials["net_profit"] = info.get("netIncomeToCommon")
             financials["cashflow"] = info.get("operatingCashflow")
-            financials["report_name"] = "TTM(近12个月)"
+            # 标注 TTM 截止季度
+            from datetime import datetime
+            mq = info.get("mostRecentQuarter")
+            if mq:
+                end = datetime.fromtimestamp(mq)
+                financials["report_name"] = f"TTM 截至{end.year}年{end.month}月"
+            else:
+                financials["report_name"] = "TTM(近12个月)"
             # TTM 时季报也没意义，清掉
             financials.pop("latest_report_name", None)
             financials.pop("latest_revenue", None)
