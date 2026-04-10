@@ -12,6 +12,18 @@ def _translate(text: str) -> str:
         return text
 
 
+def _safe_float(df, row_name, col):
+    """安全地从 DataFrame 中读取一个浮点值"""
+    try:
+        if row_name in df.index:
+            v = df.loc[row_name, col]
+            if v is not None and str(v) != "nan":
+                return float(v)
+    except Exception:
+        pass
+    return None
+
+
 def search_us_stock(symbol: str) -> dict | None:
     """通过美股代码获取公司基本信息"""
     try:
@@ -45,10 +57,43 @@ def search_us_stock(symbol: str) -> dict | None:
         financials["pb"] = info.get("priceToBook")
         roe = info.get("returnOnEquity")
         financials["roe"] = round(roe * 100, 2) if roe is not None else None
-        financials["revenue"] = info.get("totalRevenue")
-        financials["net_profit"] = info.get("netIncomeToCommon")
-        financials["cashflow"] = info.get("operatingCashflow")
         financials["currency"] = info.get("currency", "USD")
+
+        # 年报数据（优先）+ 最新季报
+        try:
+            inc = ticker.income_stmt
+            cf = ticker.cashflow
+            if inc is not None and not inc.empty:
+                col = inc.columns[0]
+                fy_label = col.strftime("FY%Y")
+                financials["revenue"] = _safe_float(inc, "Total Revenue", col)
+                financials["net_profit"] = _safe_float(inc, "Net Income", col)
+                financials["report_name"] = fy_label + "年报"
+            if cf is not None and not cf.empty:
+                col = cf.columns[0]
+                financials["cashflow"] = _safe_float(cf, "Operating Cash Flow", col) or _safe_float(cf, "Cash Flow From Continuing Operating Activities", col)
+
+            # 最新季报
+            qinc = ticker.quarterly_income_stmt
+            qcf = ticker.quarterly_cashflow
+            if qinc is not None and not qinc.empty:
+                qcol = qinc.columns[0]
+                q_date = qcol.strftime("%Y Q") + str((qcol.month - 1) // 3 + 1)
+                # 只有当季报比年报更新时才显示
+                if inc is not None and not inc.empty and qcol > inc.columns[0]:
+                    financials["latest_report_name"] = q_date
+                    financials["latest_revenue"] = _safe_float(qinc, "Total Revenue", qcol)
+                    financials["latest_net_profit"] = _safe_float(qinc, "Net Income", qcol)
+                    if qcf is not None and not qcf.empty:
+                        financials["latest_cashflow"] = _safe_float(qcf, "Operating Cash Flow", qcf.columns[0]) or _safe_float(qcf, "Cash Flow From Continuing Operating Activities", qcf.columns[0])
+        except Exception as e:
+            print(f"yfinance financial statements error for {symbol}: {e}")
+            # 回退到 info TTM 数据
+            if "revenue" not in financials:
+                financials["revenue"] = info.get("totalRevenue")
+                financials["net_profit"] = info.get("netIncomeToCommon")
+                financials["cashflow"] = info.get("operatingCashflow")
+                financials["report_name"] = "TTM"
 
         return {
             "market": "美股",
