@@ -189,6 +189,28 @@ function App() {
                     </div>
                   ))}
                 </div>
+                {data.financials.latest_report_name && (
+                  <>
+                    <h3 className="section-title" style={{ marginTop: 16 }}>
+                      最新进度
+                      <span className="report-tag">{data.financials.latest_report_name}</span>
+                    </h3>
+                    <div className="fin-grid">
+                      {[
+                        { label: "总营收", value: formatMoney(data.financials.latest_revenue, data.financials.currency) },
+                        { label: "净利润", value: formatMoney(data.financials.latest_net_profit, data.financials.currency), color: data.financials.latest_net_profit != null && data.financials.latest_net_profit > 0 ? "green" : "red" },
+                        { label: "经营现金流", value: formatMoney(data.financials.latest_cashflow, data.financials.currency), color: data.financials.latest_cashflow != null && data.financials.latest_cashflow > 0 ? "green" : "red" },
+                      ].map((item) => (
+                        <div key={item.label} className="fin-card">
+                          <div className="fin-label">{item.label}</div>
+                          <div className={`fin-value ${item.color || ""}`}>
+                            {item.value ?? "暂无数据"}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </>
+                )}
               </div>
             )}
 

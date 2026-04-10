@@ -94,25 +94,49 @@ def _fetch_financials(code: str) -> dict:
         print(f"Fetch valuation error for {code}: {e}")
 
     # 2. 财务指标 ROE / 营收 / 净利润 / 经营现金流
+    #    取最近 5 期，找最新年报 + 最新季报
     try:
         params = {
             "reportName": "RPT_F10_FINANCE_MAINFINADATA",
             "columns": "REPORT_DATE_NAME,ROEJQ,TOTALOPERATEREVE,PARENTNETPROFIT,NETCASH_OPERATE_PK",
             "filter": f'(SECUCODE="{secucode}")',
-            "pageSize": "1",
+            "pageSize": "5",
             "sortTypes": "-1",
             "sortColumns": "REPORT_DATE",
         }
         resp = cffi_requests.get(_DC_BASE, params=params, timeout=15, impersonate="chrome")
         data = resp.json()
         items = (data.get("result") or {}).get("data") or []
+
+        # 最新一期（用于 ROE）
         if items:
-            it = items[0]
-            result["roe"] = it.get("ROEJQ")
-            result["revenue"] = it.get("TOTALOPERATEREVE")
-            result["net_profit"] = it.get("PARENTNETPROFIT")
-            result["cashflow"] = it.get("NETCASH_OPERATE_PK")
-            result["report_name"] = it.get("REPORT_DATE_NAME", "")
+            result["roe"] = items[0].get("ROEJQ")
+
+        # 找最新年报（营收/净利润/现金流用年报数据）
+        annual = None
+        latest = None
+        for it in items:
+            name = it.get("REPORT_DATE_NAME", "")
+            if not latest:
+                latest = it
+            if "年报" in name:
+                annual = it
+                break
+
+        # 优先用年报，没有年报就用最新一期
+        src = annual or latest
+        if src:
+            result["revenue"] = src.get("TOTALOPERATEREVE")
+            result["net_profit"] = src.get("PARENTNETPROFIT")
+            result["cashflow"] = src.get("NETCASH_OPERATE_PK")
+            result["report_name"] = src.get("REPORT_DATE_NAME", "")
+
+        # 如果最新一期不是年报，附带季报信息供前端展示
+        if latest and annual and latest is not annual:
+            result["latest_report_name"] = latest.get("REPORT_DATE_NAME", "")
+            result["latest_revenue"] = latest.get("TOTALOPERATEREVE")
+            result["latest_net_profit"] = latest.get("PARENTNETPROFIT")
+            result["latest_cashflow"] = latest.get("NETCASH_OPERATE_PK")
     except Exception as e:
         print(f"Fetch financials error for {code}: {e}")
 
