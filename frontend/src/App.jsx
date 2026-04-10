@@ -167,16 +167,31 @@ function App() {
             {data.financials && (
               <div className="stock-card">
                 <h3 className="section-title">
-                  财务数据
+                  估值指标
+                  <span className="report-tag">实时</span>
+                </h3>
+                <div className="fin-grid">
+                  {[
+                    { label: "PE (市盈率·TTM)", value: formatRatio(data.financials.pe), color: data.financials.pe != null && data.financials.pe < 20 ? "green" : data.financials.pe != null && data.financials.pe > 50 ? "red" : "" },
+                    { label: "PB (市净率·MRQ)", value: formatRatio(data.financials.pb), color: data.financials.pb != null && data.financials.pb < 1.5 ? "green" : data.financials.pb != null && data.financials.pb > 8 ? "red" : "" },
+                    { label: "ROE (净资产收益率)", value: formatPercent(data.financials.roe), color: data.financials.roe != null && data.financials.roe > 15 ? "green" : data.financials.roe != null && data.financials.roe < 5 ? "red" : "" },
+                  ].map((item) => (
+                    <div key={item.label} className="fin-card">
+                      <div className="fin-label">{item.label}</div>
+                      <div className={`fin-value ${item.color || ""}`}>
+                        {item.value ?? "暂无数据"}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <h3 className="section-title" style={{ marginTop: 16 }}>
+                  经营数据
                   {data.financials.report_name && (
                     <span className="report-tag">{data.financials.report_name}</span>
                   )}
                 </h3>
                 <div className="fin-grid">
                   {[
-                    { label: "PE (市盈率)", value: formatRatio(data.financials.pe), color: data.financials.pe != null && data.financials.pe < 20 ? "green" : data.financials.pe != null && data.financials.pe > 50 ? "red" : "" },
-                    { label: "PB (市净率)", value: formatRatio(data.financials.pb), color: data.financials.pb != null && data.financials.pb < 1.5 ? "green" : data.financials.pb != null && data.financials.pb > 8 ? "red" : "" },
-                    { label: "ROE (净资产收益率)", value: formatPercent(data.financials.roe), color: data.financials.roe != null && data.financials.roe > 15 ? "green" : data.financials.roe != null && data.financials.roe < 5 ? "red" : "" },
                     { label: "总营收", value: formatMoney(data.financials.revenue, data.financials.currency) },
                     { label: "净利润", value: formatMoney(data.financials.net_profit, data.financials.currency), color: data.financials.net_profit != null && data.financials.net_profit > 0 ? "green" : "red" },
                     { label: "经营现金流", value: formatMoney(data.financials.cashflow, data.financials.currency), color: data.financials.cashflow != null && data.financials.cashflow > 0 ? "green" : "red" },
