@@ -88,12 +88,18 @@ def search_us_stock(symbol: str) -> dict | None:
                         financials["latest_cashflow"] = _safe_float(qcf, "Operating Cash Flow", qcf.columns[0]) or _safe_float(qcf, "Cash Flow From Continuing Operating Activities", qcf.columns[0])
         except Exception as e:
             print(f"yfinance financial statements error for {symbol}: {e}")
-            # 回退到 info TTM 数据
-            if "revenue" not in financials:
-                financials["revenue"] = info.get("totalRevenue")
-                financials["net_profit"] = info.get("netIncomeToCommon")
-                financials["cashflow"] = info.get("operatingCashflow")
-                financials["report_name"] = "TTM"
+
+        # 年报数据不完整时，回退到 info TTM 数据
+        if not financials.get("revenue"):
+            financials["revenue"] = info.get("totalRevenue")
+            financials["net_profit"] = info.get("netIncomeToCommon")
+            financials["cashflow"] = info.get("operatingCashflow")
+            financials["report_name"] = "TTM(近12个月)"
+            # TTM 时季报也没意义，清掉
+            financials.pop("latest_report_name", None)
+            financials.pop("latest_revenue", None)
+            financials.pop("latest_net_profit", None)
+            financials.pop("latest_cashflow", None)
 
         return {
             "market": "美股",
