@@ -18,9 +18,11 @@ function formatMoney(val, currency) {
   if (currency && currency !== "CNY") {
     const abs = Math.abs(val);
     const sign = val < 0 ? "-" : "";
-    if (abs >= 1e9) return `${sign}${(abs / 1e9).toFixed(2)} B ${currency}`;
-    if (abs >= 1e6) return `${sign}${(abs / 1e6).toFixed(2)} M ${currency}`;
-    return `${sign}${abs.toLocaleString()} ${currency}`;
+    const sym = currency === "USD" ? "$" : currency + " ";
+    if (abs >= 1e12) return `${sign}${sym}${(abs / 1e12).toFixed(2)} 万亿`;
+    if (abs >= 1e8) return `${sign}${sym}${(abs / 1e8).toFixed(2)} 亿`;
+    if (abs >= 1e4) return `${sign}${sym}${(abs / 1e4).toFixed(0)} 万`;
+    return `${sign}${sym}${abs.toFixed(0)}`;
   }
   const abs = Math.abs(val);
   const sign = val < 0 ? "-" : "";
