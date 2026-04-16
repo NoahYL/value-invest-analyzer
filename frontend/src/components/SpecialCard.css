@@ -1,0 +1,328 @@
+/* ============ 特殊资产卡片（MSTR / TQQQ 等） ============ */
+.sc-panel {
+  border: 2px solid;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 16px;
+}
+
+/* 头部（可点击折叠） */
+.sc-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 18px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.sc-head:hover {
+  background: rgba(0, 0, 0, 0.02);
+}
+
+.sc-head.expanded {
+  border-bottom: 1px dashed rgba(0, 0, 0, 0.08);
+}
+
+.sc-head-left {
+  flex: 1;
+  min-width: 0;
+}
+
+.sc-badges {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+  flex-wrap: wrap;
+}
+
+.sc-type-badge {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 4px;
+  letter-spacing: 0.3px;
+}
+
+.sc-updated-tag {
+  font-size: 10px;
+  font-weight: 500;
+  color: #666;
+  background: #f0f0f0;
+  padding: 1px 6px;
+  border-radius: 3px;
+  cursor: help;
+}
+
+.sc-name {
+  margin: 0 0 4px 0;
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.sc-subtitle {
+  margin: 0;
+  font-size: 12.5px;
+  color: #666;
+  line-height: 1.5;
+}
+
+.sc-toggle {
+  font-size: 12px;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+/* 正文 */
+.sc-body {
+  padding: 16px 18px 18px;
+  background: #fff;
+}
+
+/* 警告条 */
+.sc-warning {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  padding: 12px 14px;
+  border-left: 4px solid;
+  border-radius: 0 6px 6px 0;
+  margin-bottom: 18px;
+  font-size: 13px;
+  line-height: 1.7;
+  color: #1a1a2e;
+}
+
+.sc-warning-icon {
+  font-size: 16px;
+  flex-shrink: 0;
+  line-height: 1.4;
+}
+
+.sc-warning strong {
+  color: #cf1322;
+}
+
+/* 版块 */
+.sc-section {
+  margin-top: 18px;
+}
+
+.sc-section:first-of-type {
+  margin-top: 0;
+}
+
+.sc-section-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin: 0 0 10px 0;
+  padding-bottom: 6px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.sc-section-icon {
+  font-size: 12px;
+  color: #888;
+}
+
+/* 估值公式 */
+.sc-formula {
+  background: #fafbfc;
+  border: 1px solid;
+  border-left-width: 3px;
+  border-radius: 4px;
+  padding: 10px 12px;
+  margin-bottom: 10px;
+  font-family: -apple-system, "SF Mono", Menlo, monospace;
+  font-size: 12.5px;
+  color: #1a1a2e;
+  line-height: 1.6;
+  overflow-x: auto;
+}
+
+.sc-formula code {
+  font-family: inherit;
+}
+
+.sc-interp-list {
+  margin: 0;
+  padding-left: 20px;
+  font-size: 12.5px;
+  line-height: 1.8;
+  color: #333;
+}
+
+.sc-interp-list li {
+  margin-bottom: 4px;
+}
+
+.sc-interp-list strong {
+  color: #1a1a2e;
+}
+
+/* 关键输入表 */
+.sc-inputs-table {
+  border: 1px solid #f0f0f0;
+  border-radius: 6px;
+  overflow: hidden;
+  font-size: 12px;
+}
+
+.sc-inputs-head,
+.sc-inputs-row {
+  display: grid;
+  grid-template-columns: 180px 1fr 1.5fr;
+  gap: 10px;
+  padding: 8px 12px;
+  align-items: start;
+}
+
+.sc-inputs-head {
+  background: #f7f9fc;
+  font-weight: 600;
+  color: #666;
+  font-size: 11px;
+  letter-spacing: 0.3px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.sc-inputs-row {
+  border-bottom: 1px solid #fafbfc;
+  line-height: 1.7;
+}
+
+.sc-inputs-row:last-child {
+  border-bottom: none;
+}
+
+.sc-inputs-row:hover {
+  background: #fafbfc;
+}
+
+.sc-in-label {
+  font-weight: 600;
+  color: #1a1a2e;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  align-items: flex-start;
+}
+
+.sc-in-value {
+  color: #444;
+  font-family: -apple-system, "SF Mono", Menlo, monospace;
+  font-size: 12px;
+}
+
+.sc-in-source {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  color: #666;
+}
+
+.sc-in-url {
+  font-family: -apple-system, "SF Mono", Menlo, monospace;
+  font-size: 11px;
+  color: #1677ff;
+}
+
+.sc-in-hint {
+  font-size: 11.5px;
+  color: #888;
+  line-height: 1.6;
+}
+
+@media (max-width: 720px) {
+  .sc-inputs-head,
+  .sc-inputs-row {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+  .sc-inputs-head {
+    display: none;
+  }
+}
+
+/* 必问清单 */
+.sc-checklist {
+  margin: 0;
+  padding-left: 24px;
+  font-size: 13px;
+  line-height: 1.8;
+  color: #333;
+}
+
+.sc-checklist li {
+  margin-bottom: 8px;
+}
+
+.sc-checklist li::marker {
+  color: #888;
+  font-weight: 600;
+}
+
+.sc-checklist strong {
+  color: #cf1322;
+}
+
+/* 红旗 */
+.sc-redflags {
+  margin: 0;
+  padding-left: 20px;
+  list-style: "⚑ ";
+  font-size: 13px;
+  line-height: 1.8;
+  color: #873800;
+}
+
+.sc-redflags li {
+  margin-bottom: 6px;
+  padding-left: 4px;
+}
+
+.sc-redflags strong {
+  color: #cf1322;
+}
+
+/* 底部免责 */
+.sc-disclaimer {
+  margin-top: 18px;
+  padding: 10px 12px;
+  background: #fff7e6;
+  border: 1px dashed #ffd591;
+  border-radius: 4px;
+  font-size: 12px;
+  line-height: 1.7;
+  color: #873800;
+}
+
+.sc-disclaimer strong {
+  color: #cf1322;
+}
+
+/* 内联时点胶囊（与 ih-src-tag 风格一致） */
+.sc-src-tag {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 500;
+  color: #888;
+  background: #f5f5f5;
+  padding: 1px 5px;
+  border-radius: 3px;
+  margin: 0 3px;
+  vertical-align: middle;
+  white-space: nowrap;
+  letter-spacing: 0.2px;
+}
+
+.sc-asof-tag {
+  margin: 0;
+  font-size: 9.5px;
+}

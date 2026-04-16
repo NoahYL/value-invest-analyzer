@@ -4,9 +4,9 @@ import MarketPanel from "./components/MarketPanel";
 import ValuationPanel from "./components/ValuationPanel";
 import ComparisonPanel from "./components/ComparisonPanel";
 import QualityPanel from "./components/QualityPanel";
-import BusinessModelTag from "./components/BusinessModelTag";
-import MoatRadar from "./components/MoatRadar";
 import DCFPanel from "./components/DCFPanel";
+import IndustryHandbook from "./components/IndustryHandbook";
+import SpecialCard from "./components/SpecialCard";
 import "./App.css";
 
 const API_BASE = "http://localhost:8000";
@@ -44,6 +44,23 @@ function formatRatio(val) {
 function formatPercent(val) {
   if (val == null) return null;
   return `${Number(val).toFixed(2)}%`;
+}
+
+/**
+ * 判断 financials 是否有「基本面」数据（营收/净利润/现金流）。
+ * 只要任一基本面字段非 null 就显示模块 02。
+ *
+ * ETF 往往返回 PE（来自价格层面），但 revenue/net_profit/cashflow 全空 —
+ * 这种情况下模块 02 渲染出来是空壳，应当隐藏。
+ * 单纯有 PE/PB 不足以说明是"有经营数据的生意"。
+ */
+function hasFinancialData(fin) {
+  if (!fin) return false;
+  const fundamentals = [
+    "revenue", "net_profit", "cashflow",
+    "latest_revenue", "latest_net_profit", "latest_cashflow",
+  ];
+  return fundamentals.some((k) => fin[k] != null);
 }
 
 function ModuleHeader({ num, title, subtitle }) {
@@ -121,6 +138,12 @@ function App() {
             title="公司画像"
             subtitle="先看懂一门生意，再考虑它的价格。"
           />
+
+          {/* 行业手册（可折叠） */}
+          <div className="section" style={{ marginBottom: 16 }}>
+            <IndustryHandbook code={data.code} industry={data.industry} />
+          </div>
+
           <div className="stock-details">
             <div className="detail-row">
               <span className="label">行业</span>
@@ -132,16 +155,6 @@ function App() {
                 {data.business || "暂无数据"}
               </span>
             </div>
-          </div>
-
-          {/* 商业模式分层 */}
-          <div className="section">
-            <BusinessModelTag code={data.code} />
-          </div>
-
-          {/* 护城河自评 */}
-          <div className="section">
-            <MoatRadar code={data.code} />
           </div>
 
           {topRevenue.length > 0 && (
@@ -194,8 +207,9 @@ function App() {
           )}
         </div>
 
-        {/* ===== 模块 2：财务质量 ===== */}
-        {data.financials && (
+        {/* ===== 模块 2：财务质量 =====
+            对 ETF / 空壳 / SPAC 这类全空字段的标的，直接不渲染，避免空壳 */}
+        {hasFinancialData(data.financials) && (
           <div className="stock-card module-card">
             <ModuleHeader
               num="02"
@@ -367,6 +381,9 @@ function App() {
             title="价值估算"
             subtitle="估值只是参考，真正的安全边际来自对生意的理解。"
           />
+
+          {/* 特殊资产卡片（MSTR/TQQQ 等，传统 DCF 不适用的标的） */}
+          <SpecialCard code={data.code} />
 
           {/* DCF 三情境 */}
           <h3 className="section-title" style={{ border: "none", marginBottom: 10 }}>

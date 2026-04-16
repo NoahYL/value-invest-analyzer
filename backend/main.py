@@ -11,6 +11,7 @@ from services.market_service import (
 from services.valuation_service import get_ashare_valuation, get_us_valuation
 from services.comparison_service import get_ashare_comparison, get_us_comparison
 from services.quality_service import get_ashare_quality, get_us_quality
+from services.benchmark_service import get_benchmark_calibration
 
 app = FastAPI(title="价值投资分析平台")
 
@@ -121,6 +122,22 @@ def get_quality(
     if data:
         return {"status": "ok", "data": data}
     return {"status": "error", "message": "获取财务质量数据失败"}
+
+
+@app.get("/api/benchmark")
+def get_benchmark(
+    codes: str = Query(..., description="同行代码列表，逗号分隔：603993,601899,NVDA"),
+):
+    """
+    行业 Benchmark 自动校准
+    输入：同行代码（跨市场，A股 6 位数字 + 美股字母，其它格式跳过）
+    输出：毛利率/净利率/ROE/资产负债率 的 P25/P50/P75 分位数 + 原始样本
+    """
+    peer_codes = [c.strip() for c in codes.split(",") if c.strip()]
+    if not peer_codes:
+        return {"status": "error", "message": "请提供至少一个同行代码"}
+    data = get_benchmark_calibration(peer_codes)
+    return {"status": "ok", "data": data}
 
 
 @app.get("/api/health")

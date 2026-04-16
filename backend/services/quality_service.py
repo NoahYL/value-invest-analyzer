@@ -117,12 +117,14 @@ def get_ashare_quality(code: str) -> dict | None:
         "current_price": price,
         "currency": "CNY",
     }
+    dcf_smart = _smart_dcf_defaults(history, "CNY")
 
     return {
         "history": history,
         "indicators": indicators,
         "flags": flags,
         "dcf_base": dcf_base,
+        "dcf_smart": dcf_smart,
     }
 
 
@@ -240,16 +242,171 @@ def get_us_quality(symbol: str) -> dict | None:
             "current_price": round(price, 2) if price else None,
             "currency": currency,
         }
+        dcf_smart = _smart_dcf_defaults(history, currency)
 
         return {
             "history": history,
             "indicators": indicators,
             "flags": flags,
             "dcf_base": dcf_base,
+            "dcf_smart": dcf_smart,
         }
     except Exception as e:
         print(f"US quality error for {symbol}: {e}")
         return None
+
+
+# ============================================================
+# DCF 智能默认值（基于历史 CAGR + 市场常识）
+# ============================================================
+
+def _cagr(start, end, years):
+    """CAGR 公式：只在 start/end 同正号时有意义。"""
+    if start is None or end is None or start <= 0 or end <= 0 or years <= 0:
+        return None
+    return round(((end / start) ** (1 / years) - 1) * 100, 2)
+
+
+def _smart_dcf_defaults(history: list[dict], market_hint: str) -> dict:
+    """
+    基于历史数据 + 市场常识，生成 DCF 智能默认值与原理说明。
+    market_hint: "CNY"（A 股）或 "USD" 等（美股）
+    """
+    is_ashare = market_hint == "CNY"
+
+    # --- 市场常数（可根据行情调整）---
+    if is_ashare:
+        perpetual_g = 3.0         # 中国长期 GDP + 通胀
+        risk_free = 2.5           # 10Y 国债（截至 2026-04 口径）
+        equity_premium = 6.0      # A 股股权风险溢价（常用 5-7%）
+    else:
+        perpetual_g = 2.5         # 美国长期 GDP
+        risk_free = 4.0           # 10Y Treasury
+        equity_premium = 5.0      # 美股 ERP 通常 4-6%
+    discount_r = round(risk_free + equity_premium, 1)
+
+    # --- 历史 CAGR（净利润优先，若某端为负则 fallback 到营收）---
+    def series(key):
+        return [h.get(key) for h in history if h.get(key) is not None]
+
+    def cagr_n(key, n):
+        s = series(key)
+        if len(s) < n + 1:
+            return None
+        return _cagr(s[-n - 1], s[-1], n)
+
+    cagr_5y_np = cagr_n("net_profit", 5)
+    cagr_3y_np = cagr_n("net_profit", 3)
+    cagr_5y_rev = cagr_n("revenue", 5)
+    cagr_3y_rev = cagr_n("revenue", 3)
+
+    # --- 推荐的 g1（中性）---
+    # 规则（按优先级）：
+    #   1. 若净利润 5 年 CAGR 在 [0, 25]%，说明是相对稳态增长，直接用
+    #   2. 否则（>25% 说明周期低基数扭曲；<0 说明亏损）降级到营收 5 年 CAGR，加警告
+    #   3. 营收 5 年仍异常时再 fallback 到 3 年
+    #   4. 都没有才用通用默认值
+    g1_source = None
+    g1_raw = None
+    g1_warning = None  # 若 None 表示无警告；否则是字符串显示在 UI
+
+    def in_range(v, lo, hi):
+        return v is not None and lo <= v <= hi
+
+    if in_range(cagr_5y_np, 0, 25):
+        g1_raw = cagr_5y_np
+        g1_source = f"净利润 5 年 CAGR = {cagr_5y_np}%"
+    elif in_range(cagr_5y_rev, 0, 25):
+        g1_raw = cagr_5y_rev
+        g1_source = f"营收 5 年 CAGR = {cagr_5y_rev}%"
+        if cagr_5y_np is not None:
+            if cagr_5y_np > 25:
+                g1_warning = (
+                    f"⚠️ 净利润 5 年 CAGR = {cagr_5y_np}% 可能被周期低基数推高，"
+                    "建议采用营收 CAGR 作为更稳定的参考。周期股应优先看长周期内的量产扩张而非单年利润。"
+                )
+            elif cagr_5y_np < 0:
+                g1_warning = (
+                    f"⚠️ 净利润 5 年 CAGR = {cagr_5y_np}%（含亏损），"
+                    "已改用营收 5 年 CAGR。建议手动判断盈利能力是否已恢复。"
+                )
+    elif in_range(cagr_3y_np, 0, 25):
+        g1_raw = cagr_3y_np
+        g1_source = f"净利润 3 年 CAGR = {cagr_3y_np}%（5 年数据不足或含异常）"
+    elif in_range(cagr_3y_rev, 0, 25):
+        g1_raw = cagr_3y_rev
+        g1_source = f"营收 3 年 CAGR = {cagr_3y_rev}%（净利润不适用）"
+    else:
+        # 全部异常，兜底
+        g1_raw = None
+
+    # 合理性约束：g1 下限 = 永续 g
+    if g1_raw is not None:
+        g1_base = max(g1_raw, perpetual_g)
+    else:
+        g1_base = 8.0
+        g1_source = "无可靠历史 CAGR（可能含亏损/周期失真），采用通用默认 8%"
+        g1_warning = (
+            "⚠️ 无法从历史数据稳定推算增速。请结合行业手册/业务判断，自行输入 g1。"
+        )
+
+    g2_base = round(max(g1_base * 0.5, perpetual_g + 0.5), 1)
+
+    # --- 三情境派生 ---
+    # 悲观：g1 -5pp，g2 衰减到接近永续，r + 1
+    # 乐观：g1 +5pp，g2 = g1_base，r - 1
+    suggested = {
+        "bear": {
+            "g1": round(max(g1_base - 5, perpetual_g), 1),
+            "g2": round(max(g2_base - 3, perpetual_g), 1),
+            "gp": perpetual_g,
+            "r": round(discount_r + 1, 1),
+        },
+        "base": {
+            "g1": round(g1_base, 1),
+            "g2": g2_base,
+            "gp": perpetual_g,
+            "r": discount_r,
+        },
+        "bull": {
+            "g1": round(g1_base + 5, 1),
+            "g2": round(g1_base, 1),
+            "gp": perpetual_g,
+            "r": round(max(discount_r - 1, perpetual_g + 2), 1),
+        },
+    }
+
+    rationale = {
+        "g1": g1_source or "无历史数据",
+        "g2": f"g1 × 0.5 = {g2_base}%（假设竞争让增速衰减一半）",
+        "gp": (
+            f"永续增速 {perpetual_g}%（中国长期 GDP + 通胀预期）"
+            if is_ashare
+            else f"永续增速 {perpetual_g}%（美国长期 GDP 预期）"
+        ),
+        "r": (
+            f"折现率 {discount_r}% = 10Y 国债 {risk_free}% + 股权风险溢价 {equity_premium}%"
+            if is_ashare
+            else f"折现率 {discount_r}% = 10Y Treasury {risk_free}% + 股权风险溢价 {equity_premium}%"
+        ),
+    }
+
+    return {
+        "suggested": suggested,
+        "rationale": rationale,
+        "warning": g1_warning,
+        "evidence": {
+            "cagr_5y_np": cagr_5y_np,
+            "cagr_3y_np": cagr_3y_np,
+            "cagr_5y_rev": cagr_5y_rev,
+            "cagr_3y_rev": cagr_3y_rev,
+            "perpetual_g": perpetual_g,
+            "risk_free": risk_free,
+            "equity_premium": equity_premium,
+            "discount_r": discount_r,
+        },
+        "asOf": "2026-04",
+    }
 
 
 # ============================================================

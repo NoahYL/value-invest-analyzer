@@ -25,6 +25,168 @@
   color: #1677ff;
 }
 
+/* === 智能默认值面板 === */
+.dcf-smart {
+  background: linear-gradient(180deg, #f6ffed 0%, #fafbfc 100%);
+  border: 1px solid #b7eb8f;
+  border-radius: 8px;
+  padding: 12px 14px;
+  margin-bottom: 14px;
+}
+
+.dcf-smart-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.dcf-smart-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: #237804;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.dcf-smart-asof {
+  font-size: 11px;
+  font-weight: 400;
+  color: #888;
+  background: #fff;
+  border: 1px solid #d9d9d9;
+  padding: 1px 6px;
+  border-radius: 3px;
+}
+
+.dcf-smart-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.dcf-smart-toggle {
+  background: transparent;
+  border: 1px solid #d9d9d9;
+  color: #666;
+  font-size: 11.5px;
+  padding: 4px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.dcf-smart-toggle:hover {
+  border-color: #52c41a;
+  color: #237804;
+}
+
+.dcf-smart-apply {
+  background: #52c41a;
+  border: 1px solid #52c41a;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 5px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.dcf-smart-apply:hover {
+  background: #389e0d;
+  border-color: #389e0d;
+}
+
+.dcf-smart-warning {
+  margin-top: 10px;
+  padding: 8px 12px;
+  background: #fff7e6;
+  border: 1px solid #ffd591;
+  border-left: 3px solid #fa8c16;
+  border-radius: 0 4px 4px 0;
+  font-size: 12px;
+  color: #873800;
+  line-height: 1.7;
+}
+
+.dcf-smart-detail {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px dashed #d9f7be;
+  font-size: 12px;
+}
+
+.dcf-smart-row {
+  display: grid;
+  grid-template-columns: 110px 60px 1fr;
+  gap: 8px;
+  align-items: baseline;
+  padding: 4px 0;
+}
+
+.dcf-smart-param {
+  color: #555;
+  font-weight: 500;
+}
+
+.dcf-smart-val {
+  font-family: -apple-system, monospace;
+  font-weight: 700;
+  color: #237804;
+  font-size: 13px;
+}
+
+.dcf-smart-src {
+  color: #666;
+  font-size: 11.5px;
+  line-height: 1.7;
+}
+
+.dcf-smart-evidence {
+  margin-top: 10px;
+  padding: 8px 10px;
+  background: #fff;
+  border: 1px solid #e8e8e8;
+  border-radius: 4px;
+}
+
+.dcf-smart-evidence-title {
+  font-size: 11px;
+  color: #888;
+  margin-bottom: 4px;
+}
+
+.dcf-smart-evidence-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  font-size: 11.5px;
+  color: #555;
+}
+
+.dcf-smart-evidence-grid b {
+  color: #1a1a2e;
+  font-family: -apple-system, monospace;
+}
+
+@media (max-width: 680px) {
+  .dcf-smart-evidence-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.dcf-smart-scens {
+  margin-top: 10px;
+  padding: 6px 10px;
+  background: #fafbfc;
+  border-radius: 4px;
+  font-size: 11px;
+  color: #888;
+  line-height: 1.7;
+}
+
 /* 基础数据条 */
 .dcf-base {
   display: flex;
