@@ -121,24 +121,18 @@ export default function ComparisonPanel({ code, market }) {
   if (loading) return <div className="cmp-loading">同行对比加载中...</div>;
   if (!data) return null;
 
-  const { peers, median, position, industry } = data;
+  const { peers, median, industry } = data;
 
   return (
     <div className="cmp-panel">
       <div className="cmp-header">
         <h3 className="cmp-title">
-          同行业对比
+          同行对比
           <span className="cmp-industry">{industry}</span>
         </h3>
-        {position && (
-          <span
-            className={`cmp-position ${
-              position === "偏低" ? "green" : position === "偏高" ? "red" : "orange"
-            }`}
-          >
-            当前估值在行业中{position}
-          </span>
-        )}
+        <span className="cmp-hint">
+          横向参考 · 估值高低不等于投资机会
+        </span>
       </div>
 
       {/* 柱状图 */}

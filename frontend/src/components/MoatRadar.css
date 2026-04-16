@@ -1,0 +1,171 @@
+.moat-panel {
+  margin-top: 0;
+}
+
+.moat-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.moat-hint-tip {
+  font-size: 11px;
+  color: #999;
+  font-weight: 400;
+  margin-left: 8px;
+  font-style: italic;
+}
+
+.moat-clear {
+  font-size: 12px;
+  padding: 4px 10px;
+  background: #fff;
+  border: 1px solid #d9d9d9;
+  border-radius: 4px;
+  color: #666;
+  cursor: pointer;
+}
+
+.moat-clear:hover {
+  border-color: #cf1322;
+  color: #cf1322;
+}
+
+.moat-body {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 20px;
+  align-items: start;
+}
+
+@media (max-width: 760px) {
+  .moat-body {
+    grid-template-columns: 1fr;
+  }
+}
+
+.moat-chart-wrap {
+  position: relative;
+}
+
+.moat-chart {
+  width: 100%;
+  height: 240px;
+}
+
+.moat-summary {
+  position: absolute;
+  bottom: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  pointer-events: none;
+}
+
+.moat-summary-avg {
+  font-size: 22px;
+  font-weight: 700;
+  color: #1677ff;
+  font-family: -apple-system, monospace;
+  line-height: 1;
+}
+
+.moat-summary-grade {
+  font-size: 11px;
+  color: #888;
+}
+
+/* 滑块 */
+.moat-sliders {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.moat-slider-row {
+  display: flex;
+  flex-direction: column;
+}
+
+.moat-slider-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 4px;
+}
+
+.moat-dim-label {
+  font-size: 13px;
+  font-weight: 500;
+  color: #333;
+}
+
+.moat-dim-val {
+  font-size: 14px;
+  font-weight: 700;
+  color: #1677ff;
+  font-family: monospace;
+}
+
+.moat-slider {
+  width: 100%;
+  height: 4px;
+  -webkit-appearance: none;
+  appearance: none;
+  background: #e8e8e8;
+  border-radius: 2px;
+  outline: none;
+  cursor: pointer;
+}
+
+.moat-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #1677ff;
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.moat-slider::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border: none;
+  border-radius: 50%;
+  background: #1677ff;
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.moat-dim-tip {
+  font-size: 11px;
+  color: #999;
+  margin-top: 3px;
+  line-height: 1.4;
+}
+
+.moat-note {
+  width: 100%;
+  margin-top: 14px;
+  padding: 10px 12px;
+  border: 1px solid #e8e8e8;
+  border-radius: 6px;
+  font-family: inherit;
+  font-size: 12px;
+  color: #333;
+  background: #fafbfc;
+  resize: vertical;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.moat-note:focus {
+  border-color: #1677ff;
+  background: #fff;
+}

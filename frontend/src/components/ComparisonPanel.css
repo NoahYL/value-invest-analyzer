@@ -36,26 +36,10 @@
   border-radius: 4px;
 }
 
-.cmp-position {
+.cmp-hint {
   font-size: 12px;
-  font-weight: 600;
-  padding: 3px 10px;
-  border-radius: 4px;
-}
-
-.cmp-position.green {
-  background: #f6ffed;
-  color: #389e0d;
-}
-
-.cmp-position.orange {
-  background: #fffbe6;
-  color: #d48806;
-}
-
-.cmp-position.red {
-  background: #fff1f0;
-  color: #cf1322;
+  color: #999;
+  font-style: italic;
 }
 
 /* 柱状图 */

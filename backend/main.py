@@ -10,6 +10,7 @@ from services.market_service import (
 )
 from services.valuation_service import get_ashare_valuation, get_us_valuation
 from services.comparison_service import get_ashare_comparison, get_us_comparison
+from services.quality_service import get_ashare_quality, get_us_quality
 
 app = FastAPI(title="价值投资分析平台")
 
@@ -105,6 +106,21 @@ def get_valuation(
     if data:
         return {"status": "ok", "data": data}
     return {"status": "error", "message": "获取估值数据失败"}
+
+
+@app.get("/api/quality")
+def get_quality(
+    code: str = Query(..., description="股票代码"),
+    market: str = Query(..., description="市场: A股 / 美股"),
+):
+    if market == "A股":
+        data = get_ashare_quality(code)
+    else:
+        data = get_us_quality(code)
+
+    if data:
+        return {"status": "ok", "data": data}
+    return {"status": "error", "message": "获取财务质量数据失败"}
 
 
 @app.get("/api/health")

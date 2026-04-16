@@ -1,0 +1,212 @@
+.dcf-panel {
+  margin-top: 0;
+}
+
+.dcf-loading,
+.dcf-empty {
+  padding: 20px;
+  color: #888;
+  font-size: 13px;
+  text-align: center;
+}
+
+.dcf-disclaimer {
+  font-size: 12px;
+  color: #666;
+  background: #e6f4ff;
+  border: 1px solid #91caff;
+  border-radius: 6px;
+  padding: 10px 12px;
+  line-height: 1.7;
+  margin-bottom: 14px;
+}
+
+.dcf-disclaimer strong {
+  color: #1677ff;
+}
+
+/* 基础数据条 */
+.dcf-base {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding: 10px 14px;
+  background: #fafbfc;
+  border: 1px solid #f0f0f0;
+  border-radius: 8px;
+  margin-bottom: 6px;
+}
+
+.dcf-base-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+}
+
+.dcf-base-label {
+  color: #888;
+}
+
+.dcf-base-input {
+  width: 80px;
+  padding: 4px 8px;
+  border: 1px solid #d9d9d9;
+  border-radius: 4px;
+  font-size: 13px;
+  font-family: monospace;
+  text-align: right;
+  outline: none;
+}
+
+.dcf-base-input:focus {
+  border-color: #1677ff;
+}
+
+.dcf-base-unit {
+  color: #999;
+  font-size: 11px;
+}
+
+.dcf-base-val {
+  font-family: monospace;
+  font-weight: 600;
+  color: #333;
+}
+
+.dcf-reset {
+  margin-left: auto;
+  padding: 4px 10px;
+  font-size: 12px;
+  background: #fff;
+  border: 1px solid #d9d9d9;
+  border-radius: 4px;
+  color: #666;
+  cursor: pointer;
+}
+
+.dcf-reset:hover {
+  border-color: #1677ff;
+  color: #1677ff;
+}
+
+.dcf-fcf-source {
+  font-size: 11px;
+  color: #999;
+  margin-bottom: 16px;
+  font-style: italic;
+}
+
+/* 三情境卡片 */
+.dcf-results {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+@media (max-width: 760px) {
+  .dcf-results {
+    grid-template-columns: 1fr;
+  }
+}
+
+.dcf-card {
+  background: #fff;
+  border: 1px solid #f0f0f0;
+  border-top: 3px solid #1677ff;
+  border-radius: 8px;
+  padding: 14px;
+}
+
+.dcf-card-head {
+  margin-bottom: 10px;
+}
+
+.dcf-scen-badge {
+  display: inline-block;
+  padding: 3px 10px;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  border-radius: 4px;
+}
+
+.dcf-iv-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 4px;
+}
+
+.dcf-iv-label {
+  font-size: 11px;
+  color: #888;
+}
+
+.dcf-iv-val {
+  font-size: 20px;
+  font-weight: 700;
+  font-family: -apple-system, monospace;
+}
+
+.dcf-mos {
+  font-size: 14px;
+  font-weight: 600;
+  font-family: monospace;
+}
+
+.dcf-mos.green { color: #389e0d; }
+.dcf-mos.orange { color: #d48806; }
+.dcf-mos.red { color: #cf1322; }
+
+/* 参数编辑 */
+.dcf-params {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px dashed #f0f0f0;
+}
+
+.dcf-param label {
+  display: block;
+  font-size: 10px;
+  color: #999;
+  margin-bottom: 2px;
+}
+
+.dcf-param div {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.dcf-param input {
+  width: 52px;
+  padding: 3px 6px;
+  border: 1px solid #e8e8e8;
+  border-radius: 3px;
+  font-size: 12px;
+  font-family: monospace;
+  text-align: right;
+  outline: none;
+}
+
+.dcf-param input:focus {
+  border-color: #1677ff;
+}
+
+.dcf-param span {
+  font-size: 10px;
+  color: #999;
+}
+
+.dcf-method-note {
+  font-size: 11px;
+  color: #bbb;
+  margin-top: 12px;
+  text-align: center;
+  line-height: 1.6;
+}

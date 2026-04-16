@@ -1,0 +1,180 @@
+.q-panel {
+  margin-top: 0;
+}
+
+.q-loading {
+  padding: 20px;
+  color: #888;
+  font-size: 13px;
+  text-align: center;
+}
+
+/* 指标卡网格 */
+.q-grid {
+  display: grid;
+  gap: 10px;
+  margin-bottom: 4px;
+}
+
+.q-grid-4 {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.q-grid-5 {
+  grid-template-columns: repeat(5, 1fr);
+}
+
+@media (max-width: 760px) {
+  .q-grid-4, .q-grid-5 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.q-card {
+  background: #fafbfc;
+  border: 1px solid #f0f0f0;
+  border-radius: 8px;
+  padding: 14px 12px;
+  text-align: center;
+  transition: all 0.2s;
+}
+
+.q-card:hover {
+  border-color: #d9d9d9;
+  transform: translateY(-1px);
+}
+
+.q-label {
+  font-size: 12px;
+  color: #888;
+  margin-bottom: 6px;
+}
+
+.q-value {
+  font-size: 20px;
+  font-weight: 700;
+  font-family: -apple-system, monospace;
+  color: #333;
+  line-height: 1.2;
+}
+
+.q-value.green { color: #389e0d; }
+.q-value.red { color: #cf1322; }
+
+.q-tip {
+  font-size: 10px;
+  color: #bbb;
+  margin-top: 8px;
+  line-height: 1.4;
+  min-height: 26px;
+}
+
+/* 红旗 */
+.q-flags {
+  margin-top: 20px;
+}
+
+.q-flag {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  background: #fff7e6;
+  border: 1px solid #ffd591;
+  border-left: 4px solid #fa8c16;
+  border-radius: 6px;
+  padding: 10px 12px;
+  margin-bottom: 8px;
+}
+
+.q-flag-danger {
+  background: #fff1f0;
+  border-color: #ffa39e;
+  border-left-color: #cf1322;
+}
+
+.q-flag-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #fa8c16;
+  color: #fff;
+  font-weight: 700;
+  font-size: 12px;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.q-flag-danger .q-flag-icon {
+  background: #cf1322;
+}
+
+.q-flag-body {
+  flex: 1;
+}
+
+.q-flag-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: #873800;
+  margin-bottom: 2px;
+}
+
+.q-flag-danger .q-flag-title {
+  color: #820014;
+}
+
+.q-flag-desc {
+  font-size: 12px;
+  color: #666;
+  line-height: 1.6;
+}
+
+/* 趋势图 */
+.q-trend {
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid #f0f0f0;
+}
+
+.q-trend-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.q-tabs {
+  display: flex;
+  gap: 4px;
+  background: #f5f5f5;
+  border-radius: 6px;
+  padding: 2px;
+}
+
+.q-tab {
+  padding: 4px 12px;
+  font-size: 12px;
+  border: none;
+  border-radius: 4px;
+  background: transparent;
+  color: #666;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.q-tab.active {
+  background: #fff;
+  color: #1677ff;
+  font-weight: 600;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.q-chart {
+  width: 100%;
+  height: 260px;
+}
