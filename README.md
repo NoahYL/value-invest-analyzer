@@ -50,31 +50,33 @@
 
 ## 快速开始
 
-### 1. 后端
+### 日常启动（已装好依赖后）
 
 ```bash
-cd backend
+# 终端 1 — 后端（端口 8000）
+cd backend && uvicorn main:app --port 8000
 
-# 安装依赖
-pip install -r requirements.txt
-
-# 启动（端口 8000）
-uvicorn main:app --host 0.0.0.0 --port 8000
+# 终端 2 — 前端（端口 5173）
+cd frontend && npm run dev
 ```
 
-### 2. 前端
+浏览器打开 **http://localhost:5173**
+
+端口被占用（重启/崩溃常见）：
+```bash
+lsof -ti:8000 | xargs -r kill -9   # 清 8000
+lsof -ti:5173 | xargs -r kill -9   # 清 5173
+```
+
+### 首次安装
 
 ```bash
-cd frontend
+# 后端依赖
+cd backend && pip install -r requirements.txt
 
-# 安装依赖
-npm install
-
-# 开发模式（端口 5173）
-npm run dev
+# 前端依赖
+cd frontend && npm install
 ```
-
-浏览器打开 http://localhost:5173。
 
 ## 项目结构
 
